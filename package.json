@@ -4,21 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/snakewarhead/crawler-mtproto.git"
-  },
-  "keywords": [
-    "crawler"
-  ],
-  "author": "",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/snakewarhead/crawler-mtproto/issues"
-  },
-  "homepage": "https://github.com/snakewarhead/crawler-mtproto#readme",
   "dependencies": {
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
