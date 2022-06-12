@@ -1,11 +1,15 @@
 require('dotenv').config()
 const input = require('input')
 
-const { TelegramClient } = require('telegram')
+const { TelegramClient, Api } = require('telegram')
 const { StringSession } = require('telegram/sessions')
+const { NewMessage } = require('telegram/events')
+
+const libs = require('../libs')
 
 describe('telegram', () => {
   let client
+  const channels = new Map()
 
   before(async () => {
     const stringSession = new StringSession(process.env.API_SESSION)
@@ -23,7 +27,38 @@ describe('telegram', () => {
     console.log(client.session.save())
   })
 
-  it('send msg', async () => {
+  after(async () => {
+    await client.destroy()
+  })
+
+  it.skip('send msg', async () => {
     await client.sendMessage('me', { message: 'Hello!' })
+  })
+
+  it('get channels', async () => {
+    const result = await client.invoke(
+      new Api.channels.GetChannels({
+        id: ['binance_announcements', 'gateio_english_news', 'BinanceChinese'],
+      }),
+    )
+    result.chats.forEach((i) => {
+      channels.set(i.id.toString(), i)
+    })
+    console.log(channels)
+  })
+
+  it('receive msg', async () => {
+    const handler = async (e) => {
+      const msg = e.message
+      const channelId = msg?.peerId?.channelId.toString()
+      if (!channels.has(channelId)) {
+        return
+      }
+      const chan = channels.get(channelId)
+      console.log(`channel - ${chan.id}, ${chan.title}, ${chan.username}`, `message - ${msg.id}, ${msg.message}`)
+    }
+    client.addEventHandler(handler, new NewMessage({}))
+
+    await libs.sleep(30 * 1000)
   })
 })
