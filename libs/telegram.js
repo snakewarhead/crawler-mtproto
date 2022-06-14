@@ -1,11 +1,10 @@
-require('dotenv').config()
 const input = require('input')
 
 const { TelegramClient, Api } = require('telegram')
 const { StringSession } = require('telegram/sessions')
 const { NewMessage } = require('telegram/events')
 
-const libs = require('../libs')
+const { sleep } = require('./index')
 
 let client
 
@@ -32,7 +31,7 @@ const destroy = async () => {
   await client.destroy()
 }
 
-const receiving = async (chanArray) => {
+const receiving = async (chanArray, onMsg) => {
   // get channels
   const channels = new Map()
   const result = await client.invoke(
@@ -53,7 +52,12 @@ const receiving = async (chanArray) => {
         return
       }
       const chan = channels.get(channelId)
-      console.log(`channel - ${chan.id}, ${chan.title}, ${chan.username}`, `message - ${msg.id}, ${msg.message}`)
+
+      const title = `${chan.id}, ${chan.title}, ${chan.username}`
+      const content = `${msg.id}, ${msg.message}`
+      console.log(`channel - ${title}`, `message - ${content}`)
+
+      await onMsg(title, content)
     } catch (e) {
       console.error(e)
     }
@@ -61,7 +65,7 @@ const receiving = async (chanArray) => {
   client.addEventHandler(handler, new NewMessage({}))
 
   while (true) {
-    await libs.sleep(60 * 1000)
+    await sleep(60 * 1000)
   }
 }
 

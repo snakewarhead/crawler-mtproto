@@ -1,18 +1,12 @@
 require('dotenv').config()
+const email = require('./libs/emailUtils')
 const telegram = require('./libs/telegram')
 
 const main = async () => {
+  await email.init()
   await telegram.init()
 
-  while (true) {
-    try {
-      await telegram.receiving(process.env.CHANNELS.split(','))
-    } catch (e) {
-      console.error(e)
-    }
-
-    console.log('retrying receive')
-  }
+  await Promise.all([email.runQueue(), telegram.receiving(process.env.CHANNELS.split(','), email.sendInQueue)])
 }
 
 main().catch(console.error)
