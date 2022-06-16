@@ -1,3 +1,4 @@
+require('dotenv').config()
 const telegram = require('../libs/telegram')
 
 describe('telegram', () => {
