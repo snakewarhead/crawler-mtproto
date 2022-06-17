@@ -19,6 +19,8 @@ const init = async () => {
       pass: process.env.EMAIL_PASS,
     },
   })
+
+  console.log('email init success')
 }
 
 const send = async (subject, text) => {
