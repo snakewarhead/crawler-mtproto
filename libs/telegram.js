@@ -47,7 +47,7 @@ const receiving = async (chanArray, onMsg) => {
   const handler = async (m) => {
     try {
       const msg = m.message
-      const channelId = msg?.peerId?.channelId.toString()
+      const channelId = msg?.peerId?.channelId?.toString()
       if (!channels.has(channelId)) {
         return
       }
