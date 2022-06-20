@@ -37,7 +37,7 @@ const send = async (subject, text) => {
       text,
     })
 
-    console.log('email id:', info.messageId)
+    console.log('email:', info.messageId, new Date(), subject, text)
   } catch (e) {
     console.error(e)
   }
@@ -50,7 +50,7 @@ const sendInQueue = (subject, text) => {
 const runQueue = async () => {
   while (true) {
     await sleep(QUEUE_WAIT_TIME)
-    console.log('queue: ', queue.length)
+    // console.log('queue: ', queue.length)
 
     const ct = queue.shift()
     if (!ct) {
