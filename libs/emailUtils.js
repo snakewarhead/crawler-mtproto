@@ -57,7 +57,7 @@ const runQueue = async () => {
       continue
     }
 
-    send(ct.subject, ct.text)
+    await send(ct.subject, ct.text)
   }
 }
 
