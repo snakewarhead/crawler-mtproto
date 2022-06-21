@@ -12,7 +12,7 @@ const init = async () => {
   // login
   const stringSession = new StringSession(process.env.API_SESSION)
   client = new TelegramClient(stringSession, Number(process.env.API_ID), process.env.API_HASH, {
-    baseLogger: new Logger('debug'),
+    baseLogger: new Logger(process.env.API_LOGGER),
     connectionRetries: Number(process.env.API_RETRY),
     proxy: process.env.PROXY_SOCKET_TYPE
       ? { socksType: Number(process.env.PROXY_SOCKET_TYPE), ip: process.env.PROXY_IP, port: Number(process.env.PROXY_PORT) }
