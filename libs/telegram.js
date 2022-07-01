@@ -54,8 +54,8 @@ const receiving = async (chanArray, onMsg) => {
       }
       const chan = channels.get(channelId)
 
-      const title = `${chan.id}, ${chan.title}, ${chan.username}`
-      const content = `${msg.id}, ${msg.message}`
+      const title = `${chan.username}, ${chan.id}`
+      const content = `${msg.message}`
       console.log(`channel - ${title}`, `message - ${content}`)
 
       await onMsg(title, content)
