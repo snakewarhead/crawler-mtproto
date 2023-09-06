@@ -20,7 +20,7 @@ const init = async () => {
   })
   await client.start({
     phoneNumber: process.env.PHONE,
-    password: process.env.PASS,
+    password: async () => await input.password('Please enter the password: '),
     phoneCode: async () => await input.text('Please enter the code you received: '),
     forceSMS: false, // code from app
     onError: console.error,
