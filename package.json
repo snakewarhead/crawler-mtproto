@@ -12,7 +12,7 @@
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
     "nodemailer": "^6.7.5",
-    "telegram": "^2.8.4"
+    "telegram": "^2.18.26"
   },
   "devDependencies": {
     "chai": "^4.3.6",
